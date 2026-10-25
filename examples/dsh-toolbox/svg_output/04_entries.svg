@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" data-pptx-page-role="content" width="1280" height="720" font-family="Microsoft YaHei, Segoe UI" font-size="24" fill="#EAF6FA">
+  <defs>
+    <linearGradient id="washV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#061A24" stop-opacity="0.92"/>
+      <stop offset="60%" stop-color="#061A24" stop-opacity="0.68"/>
+      <stop offset="100%" stop-color="#061A24" stop-opacity="0.91"/>
+    </linearGradient>
+  </defs>
+  <image id="page-bg" data-pptx-role="background" href="../images/bg-entries.png" x="0" y="0" width="1280" height="720" preserveAspectRatio="xMidYMid slice"/>
+  <rect id="page-wash" data-pptx-role="decoration" x="0" y="0" width="1280" height="720" fill="url(#washV)"/>
+  <g id="page-head" data-pptx-bounds="72 72 1136 110">
+    <rect x="72" y="90" width="40" height="2" fill="#22D3EE"/>
+    <text x="128" y="98" font-family="Consolas, monospace" font-size="18" letter-spacing="1.6" fill="#8FB3C2">03 / 入口</text>
+    <text x="72" y="164" font-size="44" font-weight="bold" fill="#EAF6FA">五个入口，一条流水线</text>
+  </g>
+  <g id="entry-browser" data-pptx-bounds="72 196 1136 80">
+    <rect x="72" y="196" width="1136" height="1" fill="#1B4557"/>
+    <text x="72" y="250" font-family="Consolas, monospace" font-size="40" fill="#22D3EE">01</text>
+    <text x="176" y="246" font-size="28" fill="#EAF6FA">浏览器控制台</text>
+    <text x="400" y="246" font-size="24" fill="#8FB3C2">打开网址、截图、读文字、点击、输入、执行 JS</text>
+  </g>
+  <g id="entry-video" data-pptx-bounds="72 276 1136 80">
+    <rect x="72" y="276" width="1136" height="1" fill="#1B4557"/>
+    <text x="72" y="330" font-family="Consolas, monospace" font-size="40" fill="#22D3EE">02</text>
+    <text x="176" y="326" font-size="28" fill="#EAF6FA">视频总结</text>
+    <text x="400" y="326" font-size="24" fill="#8FB3C2">贴 B 站链接：抓字幕 → ChatGPT 总结 → 自动存 Markdown</text>
+  </g>
+  <g id="entry-gpt" data-pptx-bounds="72 356 1136 80">
+    <rect x="72" y="356" width="1136" height="1" fill="#1B4557"/>
+    <text x="72" y="410" font-family="Consolas, monospace" font-size="40" fill="#22D3EE">03</text>
+    <text x="176" y="406" font-size="28" fill="#EAF6FA">GPT 控制台</text>
+    <text x="400" y="406" font-size="24" fill="#8FB3C2">发提示词、等出图、原图存盘（一次一条，哈希去重）</text>
+  </g>
+  <g id="entry-ppt" data-pptx-bounds="72 436 1136 80">
+    <rect x="72" y="436" width="1136" height="1" fill="#1B4557"/>
+    <text x="72" y="490" font-family="Consolas, monospace" font-size="40" fill="#22D3EE">04</text>
+    <text x="176" y="486" font-size="28" fill="#EAF6FA">PPT 生成</text>
+    <text x="400" y="486" font-size="24" fill="#8FB3C2">一句话出可编辑的 .pptx，页面接着改得动</text>
+  </g>
+  <g id="entry-github" data-pptx-bounds="72 516 1136 80">
+    <rect x="72" y="516" width="1136" height="1" fill="#1B4557"/>
+    <text x="72" y="570" font-family="Consolas, monospace" font-size="40" fill="#22D3EE">05</text>
+    <text x="176" y="566" font-size="28" fill="#EAF6FA">GitHub 发布</text>
+    <text x="400" y="566" font-size="24" fill="#8FB3C2">不用命令行，目录直接推成仓库 + 发 Release</text>
+  </g>
+</svg>

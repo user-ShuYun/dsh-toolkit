@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" data-pptx-page-role="ending" width="1280" height="720" font-family="Microsoft YaHei, Segoe UI" font-size="24" fill="#EAF6FA" lang="zh-CN">
+  <defs>
+    <linearGradient id="washV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#061A24" stop-opacity="0.92"/>
+      <stop offset="52%" stop-color="#061A24" stop-opacity="0.62"/>
+      <stop offset="100%" stop-color="#061A24" stop-opacity="0.90"/>
+    </linearGradient>
+  </defs>
+  <image id="page-bg" data-pptx-role="background" href="../images/bg-chain.png" x="0" y="0" width="1280" height="720" preserveAspectRatio="xMidYMid slice"/>
+  <rect id="page-wash" data-pptx-role="decoration" x="0" y="0" width="1280" height="720" fill="url(#washV)"/>
+
+  <g id="page-head" data-pptx-bounds="64 72 1152 112">
+    <rect x="64" y="88" width="40" height="2" fill="#22D3EE"/>
+    <text x="120" y="96" font-family="Consolas, monospace" font-size="18" letter-spacing="1.6" fill="#8FB3C2">05 / 链路</text>
+    <text x="64" y="164" font-size="44" font-weight="bold" fill="#EAF6FA">一分钟，从链接到笔记</text>
+  </g>
+
+  <g id="strip" data-pptx-bounds="64 250 1152 170">
+    <rect x="64" y="250" width="1152" height="170" fill="#0C2B38"/>
+    <rect x="64" y="250" width="1152" height="2" fill="#1B4557"/>
+
+    <rect x="84" y="266" width="18" height="10" fill="#061A24"/>
+    <rect x="124" y="266" width="18" height="10" fill="#061A24"/>
+    <rect x="164" y="266" width="18" height="10" fill="#061A24"/>
+    <rect x="204" y="266" width="18" height="10" fill="#061A24"/>
+    <rect x="244" y="266" width="18" height="10" fill="#061A24"/>
+
+    <text x="84" y="330" font-family="Consolas, monospace" font-size="40" fill="#22D3EE" fill-opacity="0.75">01</text>
+    <text x="152" y="326" font-size="18" fill="#EAF6FA">B 站链接</text>
+    <text x="152" y="352" font-size="16" fill="#8FB3C2">复制粘贴</text>
+
+    <text x="314" y="330" font-family="Consolas, monospace" font-size="40" fill="#22D3EE" fill-opacity="0.75">02</text>
+    <text x="382" y="326" font-size="18" fill="#EAF6FA">取登录态</text>
+    <text x="382" y="352" font-size="16" fill="#8FB3C2">已登录的浏览器</text>
+
+    <text x="544" y="330" font-family="Consolas, monospace" font-size="40" fill="#22D3EE" fill-opacity="0.75">03</text>
+    <text x="612" y="326" font-size="18" fill="#EAF6FA">wbi 签名</text>
+    <text x="612" y="352" font-size="16" fill="#8FB3C2">按 B 站规则调接口</text>
+
+    <text x="774" y="330" font-family="Consolas, monospace" font-size="40" fill="#22D3EE" fill-opacity="0.75">04</text>
+    <text x="842" y="326" font-size="18" fill="#EAF6FA">抓字幕</text>
+    <text x="842" y="352" font-size="16" fill="#8FB3C2">751 句 / 9912 字</text>
+
+    <text x="1004" y="330" font-family="Consolas, monospace" font-size="40" fill="#F2B45A" fill-opacity="0.85">05</text>
+    <text x="1072" y="326" font-size="18" fill="#F2B45A">存笔记</text>
+    <text x="1072" y="352" font-size="16" fill="#8FB3C2">Markdown + 索引</text>
+
+    <rect x="84" y="394" width="18" height="10" fill="#061A24"/>
+    <rect x="124" y="394" width="18" height="10" fill="#061A24"/>
+    <rect x="164" y="394" width="18" height="10" fill="#061A24"/>
+    <rect x="204" y="394" width="18" height="10" fill="#061A24"/>
+    <rect x="244" y="394" width="18" height="10" fill="#061A24"/>
+  </g>
+
+  <g id="scale" data-pptx-bounds="64 440 1152 70">
+    <rect x="84" y="458" width="1096" height="1" fill="#1B4557"/>
+    <rect x="84" y="452" width="1" height="14" fill="#22D3EE"/>
+    <text x="84" y="498" font-family="Consolas, monospace" font-size="16" fill="#8FB3C2">0s</text>
+    <rect x="358" y="452" width="1" height="14" fill="#22D3EE"/>
+    <text x="358" y="498" font-family="Consolas, monospace" font-size="16" fill="#8FB3C2">5s</text>
+    <rect x="632" y="452" width="1" height="14" fill="#22D3EE"/>
+    <text x="632" y="498" font-family="Consolas, monospace" font-size="16" fill="#8FB3C2">12s</text>
+    <rect x="906" y="452" width="1" height="14" fill="#22D3EE"/>
+    <text x="906" y="498" font-family="Consolas, monospace" font-size="16" fill="#8FB3C2">30s</text>
+    <rect x="1178" y="452" width="1" height="14" fill="#F2B45A"/>
+    <text x="1130" y="498" font-family="Consolas, monospace" font-size="16" fill="#F2B45A">60s</text>
+  </g>
+
+  <g id="closing-takeaway" data-pptx-bounds="64 560 1152 140">
+    <rect x="64" y="560" width="4" height="98" fill="#F2B45A"/>
+    <text x="96" y="598" font-size="28" fill="#F2B45A">这套东西你自己也能装，代码在 GitHub</text>
+    <text x="96" y="642" font-size="18" fill="#8FB3C2">751 句字幕、9912 字，全流程 1 分钟，不需要人动手</text>
+  </g>
+</svg>

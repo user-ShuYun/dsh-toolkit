@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" data-pptx-page-role="content" width="1280" height="720" font-family="Microsoft YaHei, Segoe UI" font-size="24" fill="#EAF6FA" lang="zh-CN">
+  <defs>
+    <linearGradient id="washV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#061A24" stop-opacity="0.92"/>
+      <stop offset="58%" stop-color="#061A24" stop-opacity="0.64"/>
+      <stop offset="100%" stop-color="#061A24" stop-opacity="0.90"/>
+    </linearGradient>
+  </defs>
+  <image id="page-bg" data-pptx-role="background" href="../images/bg-structure.png" x="0" y="0" width="1280" height="720" preserveAspectRatio="xMidYMid slice"/>
+  <rect id="page-wash" data-pptx-role="decoration" x="0" y="0" width="1280" height="720" fill="url(#washV)"/>
+
+  <g id="page-head" data-pptx-bounds="64 72 1152 112">
+    <rect x="64" y="88" width="40" height="2" fill="#22D3EE"/>
+    <text x="120" y="96" font-family="Consolas, monospace" font-size="18" letter-spacing="1.6" fill="#8FB3C2">02 / 结构</text>
+    <text x="64" y="164" font-size="44" font-weight="bold" fill="#EAF6FA">三层，越往下越靠近机器</text>
+  </g>
+
+  <g id="step-1-bar" data-pptx-bounds="64 240 620 120">
+    <rect x="64" y="240" width="620" height="120" fill="#0C2B38"/>
+    <rect x="64" y="240" width="4" height="120" fill="#22D3EE"/>
+    <text x="92" y="322" font-family="Consolas, monospace" font-size="64" fill="#22D3EE" fill-opacity="0.55">01</text>
+    <text x="196" y="300" font-size="30" font-weight="bold" fill="#EAF6FA">插件层</text>
+    <text x="196" y="330" font-family="Consolas, monospace" font-size="15" letter-spacing="1.6" fill="#8FB3C2">PLUGIN</text>
+  </g>
+  <g id="step-1-note" data-pptx-bounds="700 248 516 112">
+    <text x="700" y="292" font-size="24" fill="#EAF6FA">装进 DeepSeek Harness 的插件</text>
+    <text x="700" y="330" font-size="18" fill="#8FB3C2">侧边栏工作台 · 插件市场 · 视觉能力 · PPT 生成</text>
+  </g>
+
+  <g id="step-2-bar" data-pptx-bounds="64 372 520 120">
+    <rect x="64" y="372" width="520" height="120" fill="#0C2B38"/>
+    <rect x="64" y="372" width="4" height="120" fill="#7DD3FC"/>
+    <text x="92" y="454" font-family="Consolas, monospace" font-size="64" fill="#7DD3FC" fill-opacity="0.55">02</text>
+    <text x="196" y="432" font-size="30" font-weight="bold" fill="#EAF6FA">服务层</text>
+    <text x="196" y="462" font-family="Consolas, monospace" font-size="15" letter-spacing="1.6" fill="#8FB3C2">SERVICE</text>
+  </g>
+  <g id="step-2-note" data-pptx-bounds="600 380 616 112">
+    <text x="600" y="424" font-size="24" fill="#EAF6FA">本机几个常驻的小服务</text>
+    <text x="600" y="462" font-size="18" fill="#8FB3C2">浏览器控制台 3100 · GPT 控制台 3099 · 启动面板 3101 · 调试端口 9222</text>
+  </g>
+
+  <g id="step-3-bar" data-pptx-bounds="64 504 420 120">
+    <rect x="64" y="504" width="420" height="120" fill="#0C2B38"/>
+    <rect x="64" y="504" width="4" height="120" fill="#F2B45A"/>
+    <text x="92" y="586" font-family="Consolas, monospace" font-size="64" fill="#F2B45A" fill-opacity="0.55">03</text>
+    <text x="196" y="564" font-size="30" font-weight="bold" fill="#EAF6FA">脚本层</text>
+    <text x="196" y="594" font-family="Consolas, monospace" font-size="15" letter-spacing="1.6" fill="#8FB3C2">SCRIPT</text>
+  </g>
+  <g id="step-3-note" data-pptx-bounds="500 512 716 112">
+    <text x="500" y="556" font-size="24" fill="#EAF6FA">tools\ 下的命令行脚本</text>
+    <text x="500" y="594" font-size="18" fill="#8FB3C2">25 个 .mjs，共 2789 行；上层依赖下层，越往下越靠近机器</text>
+  </g>
+
+  <g id="closing" data-pptx-bounds="64 652 1152 44">
+    <rect x="64" y="652" width="1152" height="1" fill="#1B4557"/>
+    <text x="64" y="686" font-size="20" fill="#F2B45A">三层缺一不可：插件负责入口，服务负责常驻，脚本负责干活的</text>
+  </g>
+</svg>
