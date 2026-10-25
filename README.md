@@ -65,6 +65,67 @@ node tools/gh-publish.mjs <目录> <owner/repo> "<提交信息>"
 node tools/gh-release.mjs <owner/repo> <tag> <文件>
 ```
 
+### 三、本地 AI 视频生产线（2026-10 新增）
+
+在 8 GB 显存的笔记本上跑通「出图 → 出视频 → 拼接调色」的完整链路，全部本地、不联网、不花钱。
+
+| 脚本 | 干什么 |
+|---|---|
+| `comfy.mjs` | ComfyUI 客户端：提交工作流、轮询、下载产物；`--set 节点.字段=值` 改参数 |
+| `shortdrama.mjs` | 一句话 → 分镜 → 逐镜出片（T2V 起头 + I2V 接戏）→ 拼接调色 |
+| `stitch.mjs` | 拼接 / 胶片调色（film、cinema）/ 抽帧检查表 |
+| `abtest.mjs` | 两套模型配置同题对比，自动拼对比图 |
+| `make-loops.ps1` | 批量生成氛围循环素材（ping-pong 做无缝） |
+
+```powershell
+node tools/comfy.mjs status
+node tools/comfy.mjs run --workflow workflows/ltx-t2v-api.json --out out/a.mp4 ^
+  --set "6.text=英文长句提示词" --set "70.width=640" --set "70.height=384" --set "70.length=73" ^
+  --set "71.steps=8" --set "72.cfg=1"
+
+node tools/shortdrama.mjs --engine ltx --plan out/plan.json --out out/film.mp4 --grade film
+node tools/shortdrama.mjs --engine wan --plan out/plan.json --out out/film.mp4 --width 832 --height 480
+
+node tools/stitch.mjs --in "a.mp4,b.mp4" --out final.mp4 --grade film
+```
+
+配套工作流（API 格式，可直接提交）：`workflows/ltx-t2v-api.json`、`ltx-i2v-api.json`、`wan5b-ti2v-gguf.json`、`wan5b-i2v-gguf.json`、`sdxl-t2i-api.json`。
+
+**实测数据**（RTX 5060 Laptop 8 GB）：
+
+| 引擎 | 单镜 2 秒 | 特点 |
+|---|---|---|
+| LTX 0.9.8 distilled fp8 | 12~18 秒 | 快，一致性弱，适合试片 |
+| Wan2.2 TI2V-5B Q4（GGUF） | 3.5~4 分钟 | 稳，画风厚涂 |
+
+结论写在 [`docs/本地AI视频生产-经验总纲.md`](docs/本地AI视频生产-经验总纲.md)：**8 GB 能做氛围素材和短镜头，做不了多镜头角色故事**——后者受限于单图条件 I2V，跨镜人物必崩。
+
+### 四、经验系统（让 Agent 越用越聪明）
+
+不是"记忆插件"，是**文件 + 命令 + 计划任务**拼出来的持久化闭环：
+
+| 文件/脚本 | 作用 |
+|---|---|
+| `AGENTS.md` | 开工简报，由 DSH 的 `dsh-agent-instructions` **每次新会话自动注入** |
+| `LESSONS.md` | 经验日志（症状/原因/修法/证据），追加式 |
+| `lesson-draft.mjs` | 工具失败时**自动**写一条草稿（带哈希去重，24h 窗口） |
+| `preflight.mjs` | 开工一条命令：环境体检 + 经验库状态 + 标签分布 |
+| `reflect.mjs` | 收尾：改了哪些文件、六问清单、`--index` 出全库目录（1.2 KB） |
+| `audit.mjs` | 体检：重复、陈货、超期草稿、体积、计分是否在用 |
+| `brief.mjs` | 从 LESSONS 自动生成「最值钱的几条」，写回 AGENTS.md 的标记块 |
+| `journal.mjs` | 每次任务成功/失败自动记流水 |
+| `maintain.mjs` | 每日维护：体检 → 清草稿 → 更简报 → 出日报（配 Windows 计划任务） |
+
+```powershell
+node tools/preflight.mjs                 # 开工
+node tools/brief.mjs --write             # 刷新简报
+node tools/audit.mjs                     # 体检
+node tools/maintain.mjs                  # 每日维护（日报写到 notes/日志/日报/）
+schtasks /Create /TN "DSH-Agent-Maintain" /TR "powershell -File <repo>\tools\maintain-daily.ps1" /SC DAILY /ST 09:30
+```
+
+设计取舍写在 [`docs/AGENTS.example.md`](docs/AGENTS.example.md)：**脚本只做记账，判断留给模型**；"命中计数"这类靠自觉的环节是这套系统最脆弱的地方。
+
 ---
 
 ## 快速开始

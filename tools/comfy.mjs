@@ -193,6 +193,10 @@ async function run() {
   const bytes = await download(best, outPath);
   console.log(`完成 ✅ ${Math.round((Date.now() - t0) / 1000)}s · ${best.filename} → ${outPath} (${Math.round(bytes / 1024)} KB)`);
   if (files.length > 1) console.log('  其它产物:', files.slice(1).map((f) => f.filename).join(', '));
+  try {
+    const { journalAdd } = await import('file:///D:/deepseek/tools/journal.mjs');
+    journalAdd({ kind: 'comfy', ok: true, detail: `${best.filename} → ${path.basename(String(outPath))}`, cmd: 'run ' + path.basename(String(flag('workflow', ''))) });
+  } catch {}
 }
 
 // ---------- 入口 ----------
@@ -213,5 +217,26 @@ try {
   else console.log(HELP);
 } catch (e) {
   console.error('❌ ' + (e.message || e));
+  let draftId = null;
+  try {
+    const { draftLesson } = await import('file:///D:/deepseek/tools/lesson-draft.mjs');
+    draftId = draftLesson({
+      tool: 'comfy',
+      cmd: argv.join(' '),
+      error: String(e.message || e),
+      context: { workflow: flag('workflow', ''), out: flag('out', '') }
+    });
+    if (draftId) console.error(`📝 已记为经验草稿 ${draftId}（LESSONS.draft.md，确认后升格）`);
+  } catch {}
+  try {
+    const { journalAdd } = await import('file:///D:/deepseek/tools/journal.mjs');
+    journalAdd({
+      kind: 'comfy',
+      ok: false,
+      detail: String(e.message || e).slice(0, 120),
+      cmd: argv.join(' ').slice(0, 150),
+      extra: draftId ? `草稿 ${draftId}` : ''
+    });
+  } catch {}
   process.exitCode = 1;
 }
