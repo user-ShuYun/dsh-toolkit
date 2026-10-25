@@ -1,4 +1,4 @@
-# AGENTS.md — 本工作区的开工简报
+﻿# AGENTS.md — 本工作区的开工简报
 
 > 这份文件由 DSH 的 `dsh-agent-instructions` 在**每次新会话的第一条请求**自动注入。
 > 你（Agent）现在读到的就是它。别跳过下面的「开工一条命令」。
@@ -47,7 +47,7 @@ node tools/audit.mjs                 # 体检：重复/陈货/超期草稿/计�
 
 ## 三、这台机器是什么（30 秒版）
 
-- Windows，工作目录 `D:\deepseek`，Node 24，DSH Web GUI
+- Windows，工作目录 `$WORKSPACE`，Node 24，DSH Web GUI
 - **ComfyUI 本地视频/图像生产**：`D:\ComfyUI`，端口 8188（`node tools/comfy.mjs status` 体检）
 - **B 站视频总结流水线**：取字幕 → 分块 → 摘要 → 存 `notes/`
 - **ChatGPT 浏览器自动化**：9222 端口 Edge + 3099 GPT 控制台 + 3100 浏览器控制台

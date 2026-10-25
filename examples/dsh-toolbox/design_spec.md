@@ -1,4 +1,4 @@
-<!-- ppt-master-schema: design-spec/v1 -->
+﻿<!-- ppt-master-schema: design-spec/v1 -->
 # DSH 工具箱介绍 - Design Spec
 
 ## I. Project Information
@@ -135,7 +135,7 @@
 - **Composition**: 三层横向条带自上而下堆叠，左侧竖排层名，右侧一行"是什么 + 例子"；层与层之间用 1 px 细线分隔而非卡片
 - **Title**: 它不是一个大软件，是三样东西拼起来的
 - **Core message**: 装进去的（插件）、常驻的（服务）、底下的脚本（25 个 .mjs）各管一段
-- **Content**: 插件层 · 装进 DSH 的插件：侧边栏工作台、插件市场、视觉能力、PPT 生成、工具箱按钮；服务层 · 本机常驻小服务：浏览器控制台 3100、GPT 控制台 3099、启动面板 3101、调试端口 9222；脚本层 · `D:\deepseek\tools\` 下 25 个 `.mjs`，共 2789 行
+- **Content**: 插件层 · 装进 DSH 的插件：侧边栏工作台、插件市场、视觉能力、PPT 生成、工具箱按钮；服务层 · 本机常驻小服务：浏览器控制台 3100、GPT 控制台 3099、启动面板 3101、调试端口 9222；脚本层 · `$WORKSPACE\tools\` 下 25 个 `.mjs`，共 2789 行
 
 #### Slide 03 - 硬数字
 
