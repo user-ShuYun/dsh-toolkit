@@ -109,22 +109,41 @@ node tools/stitch.mjs --in "a.mp4,b.mp4" --out final.mp4 --grade film
 | `AGENTS.md` | 开工简报，由 DSH 的 `dsh-agent-instructions` **每次新会话自动注入** |
 | `LESSONS.md` | 经验日志（症状/原因/修法/证据），追加式 |
 | `lesson-draft.mjs` | 工具失败时**自动**写一条草稿（带哈希去重，24h 窗口） |
-| `preflight.mjs` | 开工一条命令：环境体检 + 经验库状态 + 标签分布 |
+| `preflight.mjs` | 开工一条命令：待拍板 + 环境体检 + 经验库 + 记忆库 + 台账 + 渠道 |
 | `reflect.mjs` | 收尾：改了哪些文件、六问清单、`--index` 出全库目录（1.2 KB） |
-| `audit.mjs` | 体检：重复、陈货、超期草稿、体积、计分是否在用 |
+| `audit.mjs` | 体检：重复、陈货、超期草稿（归档不删）、体积、计分是否在用 |
 | `brief.mjs` | 从 LESSONS 自动生成「最值钱的几条」，写回 AGENTS.md 的标记块 |
 | `journal.mjs` | 每次任务成功/失败自动记流水 |
-| `maintain.mjs` | 每日维护：体检 → 清草稿 → 更简报 → 出日报（配 Windows 计划任务） |
+| `maintain.mjs` | 每日维护：归档草稿 → 体检 → 重建索引和台账 → 更简报 → 出日报（配 Windows 计划任务） |
+| `ledger.mjs` | **2026-10 新增**：从会话日志抽回合台账（用户原话/触及文件/失败命令/引用/步数/耗时） |
+| `learn.mjs` | **闸门**：经验默认进「待拍板」`out/pending-lessons.md`，人点头才升格成 L### |
+| `recall.mjs` | **动作类型召回**：plan / install / multifile / publish / research / ps |
+| `recall-eval.mjs` | 离线评估：20 条用例（10 条来自真机日志 + 10 条留出集），有漏或噪音时退出码 1 |
+| `recall-score.mjs` | 影子召回计分板：命中率 / 用上了多少 / 白喊多少 / 漏了多少 |
+| `recall-arm.mjs` | 召回插件装卸（默认影子，只写日志不注入） |
 
 ```powershell
 node tools/preflight.mjs                 # 开工
+node tools/ledger.mjs distill            # 提炼包：回合清单 + 失败聚类 + 判断失误信号
+node tools/learn.mjs promote P001 P003   # 用户说「留 1 3」之后才入库
 node tools/brief.mjs --write             # 刷新简报
 node tools/audit.mjs                     # 体检
 node tools/maintain.mjs                  # 每日维护（日报写到 notes/日志/日报/）
 schtasks /Create /TN "DSH-Agent-Maintain" /TR "powershell -File <repo>\tools\maintain-daily.ps1" /SC DAILY /ST 09:30
 ```
 
-设计取舍写在 [`docs/AGENTS.example.md`](docs/AGENTS.example.md)：**脚本只做记账，判断留给模型**；"命中计数"这类靠自觉的环节是这套系统最脆弱的地方。
+**三个刻意的设计取舍**（都是踩过之后改的）：
+
+1. **脚本只做记账，判断留给人** —— 所以加了闸门：`learn.mjs add` 默认进待拍板，不直接进库。
+   库越大，一条没用的经验就是以后每次检索多出的一条噪音，而"有没有用"只有人知道。
+2. **命中计数不能靠自觉** —— 原来靠手敲 `hit`，结果 53 条里 41 条全零、计分形同虚设。
+   现在由会话日志**按去重会话数重算**，`brief.mjs` 的「命中×3」才真的在排。
+3. **判断失误比命令失败值钱** —— 提炼包除了 `exit code`，还抓三类信号：
+   用户纠正（"不对 / 我说的是"）、自我否定（"其实不对 / 等等，"）、撞墙重试（同一条命令跑 ≥2 次且失败过）。
+   只按次数算重试会有 260 条噪声，必须叠"失败过"这个条件。
+
+设计取舍另见 [`docs/AGENTS.example.md`](docs/AGENTS.example.md)；
+召回插件的开关与计分口径见 `tools/recall-arm.mjs` / `tools/recall-score.mjs` 的文件头注释。
 
 ---
 

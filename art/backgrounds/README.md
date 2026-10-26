@@ -1,10 +1,10 @@
-﻿# 背景纹样语言（Background Texture Presets）
+# 背景纹样语言（Background Texture Presets）
 
 一套「按题材选纹样」的模板，避免每次现想提示词。
 
 - 词典：`presets.json`
 - 生成器：`node tools/gen-bgs.mjs`
-- 产物：`$WORKSPACE\art\<preset>-<page>.png`
+- 产物：`D:\deepseek\art\<preset>-<page>.png`
 
 ## 为什么要有它
 
@@ -44,10 +44,10 @@
 node tools/gen-bgs.mjs --list
 
 # 生成整套（6 张）
-node tools/gen-bgs.mjs --preset game --out $WORKSPACE\art\bg-game --prefix game
+node tools/gen-bgs.mjs --preset game --out D:\deepseek\art\bg-game --prefix game
 
 # 只生成需要的页
-node tools/gen-bgs.mjs --preset business --out $WORKSPACE\art\bg-biz --pages cover,numbers
+node tools/gen-bgs.mjs --preset business --out D:\deepseek\art\bg-biz --pages cover,numbers
 ```
 
 ## 生成后必须做的三处登记

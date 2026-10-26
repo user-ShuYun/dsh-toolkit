@@ -9,7 +9,13 @@
 import { createServer } from 'node:http';
 import { pathToFileURL } from 'node:url';
 import { fetchVideoText } from './bili-text.mjs';
+import { fetchYtText } from './yt-fetch.mjs';
 import { saveNote } from './notes.mjs';
+
+/** 按平台分发：YouTube 走 yt-dlp + cookie，其余走 B 站逻辑 */
+async function fetchAnyText(url) {
+  return /(youtube\.com|youtu\.be)/i.test(url) ? await fetchYtText(url) : await fetchVideoText(url);
+}
 
 const PORT = Number(process.argv[2] || 3100);
 const CDP = 'http://127.0.0.1:9222';
@@ -231,7 +237,7 @@ const actions = {
   // ---------- 视频总结 ----------
 
   async videoText({ url }) {
-    const v = await fetchVideoText(url);
+    const v = await fetchAnyText(url);
     return {
       title: v.title,
       up: v.up,
@@ -244,7 +250,7 @@ const actions = {
   },
 
   async videoSummary({ url, withGpt = true }) {
-    const v = await fetchVideoText(url);
+    const v = await fetchAnyText(url);
     const head = `标题：${v.title}\nUP：${v.up}\n时长：${v.duration} 分钟\n播放：${v.view}`;
     if (!withGpt || !v.text) {
       return { title: v.title, head, source: v.source, chars: v.chars, summary: '(未生成总结)', transcript: v.text };
@@ -265,7 +271,7 @@ const actions = {
         title: v.title,
         up: v.up,
         bvid: v.bvid,
-        url: `https://www.bilibili.com/video/${v.bvid}`,
+        url: /(youtube\.com|youtu\.be)/i.test(url) ? `https://www.youtube.com/watch?v=${v.bvid}` : `https://www.bilibili.com/video/${v.bvid}`,
         duration: v.duration,
         view: v.view,
         source: v.source,

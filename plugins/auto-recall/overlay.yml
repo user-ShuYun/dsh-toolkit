@@ -1,0 +1,4 @@
+# 临时 overlay：不改 profile，直接把 auto-recall 插进插件树（用于 headless 真机验证）
+- insert:
+    - id: auto-recall
+      name: file:///D:/deepseek/plugins/auto-recall/index.js

@@ -7,7 +7,7 @@ import { existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
 const [dir, out, per = '4', xf = '0.8'] = process.argv.slice(2);
-const ff = process.env.FFMPEG || 'ffmpeg'; // 装到 PATH 或设 FFMPEG 环境变量
+const ff = 'D:\\tools\\ffmpeg\\bin\\ffmpeg.exe';
 if (!existsSync(ff)) throw new Error('找不到 ffmpeg: ' + ff);
 
 const files = readdirSync(dir).filter((f) => f.endsWith('.png')).sort();

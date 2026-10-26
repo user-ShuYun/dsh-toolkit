@@ -7,7 +7,48 @@
  */
 import { createServer } from 'node:http';
 import { spawn } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+
+const LESSONS = 'D:\\deepseek\\LESSONS.md';
+
+/** 读经验库：统计 + 最值钱的 8 条 + 可直接发给 agent 的摘要 */
+function lessons() {
+  if (!existsSync(LESSONS)) return { count: 0, top: [], digest: '（还没有 LESSONS.md）' };
+  const raw = readFileSync(LESSONS, 'utf8');
+  const blocks = raw.split(/\n(?=## \[L\d+\])/).slice(1);
+  const entries = [];
+  for (const b of blocks) {
+    const m = b.match(/^## \[(L\d+)\]\s*(\d{4}-\d{2}-\d{2})\s*·\s*([^\s·]+)\s*·\s*(.+)$/m);
+    if (!m) continue;
+    const hit = b.match(/^- 命中[:：]\s*(\d+)/m);
+    const field = (label) => {
+      const r = b.match(new RegExp('^- ' + label + '[:：]\\s*(.+)$', 'm'));
+      return r ? r[1].trim() : '';
+    };
+    entries.push({
+      id: m[1],
+      date: m[2],
+      tag: m[3],
+      title: m[4].trim(),
+      symptom: field('症状'),
+      fix: field('修法'),
+      hits: hit ? Number(hit[1]) : 0
+    });
+  }
+  const top = entries.sort((a, b) => b.hits - a.hits || b.date.localeCompare(a.date)).slice(0, 8);
+  const lines = [
+    `请按 TOOLS.md 的开工顺序，先读经验库：D:\\deepseek\\LESSONS.md（共 ${entries.length} 条）。`,
+    '',
+    '最值钱的几条：'
+  ];
+  for (const t of top) {
+    lines.push(`- [${t.id}·${t.tag}] ${t.title}`);
+    if (t.symptom) lines.push(`  症状：${t.symptom}`);
+    if (t.fix) lines.push(`  修法：${t.fix}`);
+  }
+  lines.push('', '读完告诉我：这次任务可能会踩哪几条，你打算怎么避开。');
+  return { count: entries.length, top, digest: lines.join('\n') };
+}
 
 const PORT = Number(process.argv[2] || 3101);
 const NODE = 'D:\\Node\\node.exe';
@@ -127,6 +168,16 @@ border:1px solid #1c3049;font-size:12.5px;white-space:pre-wrap;max-height:200px;
     <a href="http://127.0.0.1:3100" target="_blank">打开浏览器控制台 ↗</a>
     <a href="http://127.0.0.1:3099" target="_blank">打开 GPT 控制台 ↗</a>
   </div>
+
+  <div style="margin-top:26px;text-align:left;background:#0a1622;border:1px solid #1c3049;border-radius:12px;padding:16px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <strong style="font-size:14px;color:#cfe6ff">📓 经验库</strong>
+      <span id="lessonCount" style="font-size:12px;color:#7f9ab5"></span>
+      <button id="copyLessons" style="margin-left:auto;padding:6px 12px;border-radius:8px;border:1px solid rgba(120,190,255,.35);background:rgba(28,54,86,.75);color:#cfe6ff;font-size:12px;cursor:pointer">复制摘要给 agent</button>
+    </div>
+    <div id="lessonList" style="font-size:12.5px;line-height:1.65;color:#9fb6cc;max-height:260px;overflow:auto"></div>
+  </div>
+
   <pre id="log" style="display:none"></pre>
 </div>
 <script>
@@ -150,6 +201,32 @@ $('btn').onclick=async()=>{
   $('btn').disabled=false; $('btn').textContent='▶ 启动 / 检查';
 };
 refresh(); setInterval(refresh,5000);
+
+// 经验库
+let digestCache = '';
+async function loadLessons(){
+  try{
+    const j = await (await fetch('/api/lessons')).json();
+    digestCache = j.digest || '';
+    $('lessonCount').textContent = '共 ' + (j.count||0) + ' 条';
+    $('lessonList').innerHTML = (j.top||[]).map(t =>
+      '<div style="padding:6px 0;border-bottom:1px solid #152639">'
+      + '<span style="color:#5f7f99;font-family:monospace">' + t.id + '</span> '
+      + '<span style="color:#7f9ab5">[' + t.tag + ']</span> '
+      + '<span style="color:#cfe6ff">' + t.title + '</span>'
+      + (t.fix ? '<div style="color:#8aa6bd;font-size:11.5px;margin-top:2px;padding-left:44px">' + t.fix + '</div>' : '')
+      + '</div>'
+    ).join('');
+  }catch(e){ $('lessonList').textContent = '读取失败: ' + e.message; }
+}
+$('copyLessons').onclick = async () => {
+  try{
+    await navigator.clipboard.writeText(digestCache);
+    $('copyLessons').textContent = '已复制 ✓ 去对话框粘贴';
+    setTimeout(()=>{ $('copyLessons').textContent='复制摘要给 agent'; }, 2500);
+  }catch(e){ $('copyLessons').textContent = '复制失败'; }
+};
+loadLessons();
 </script></body></html>`;
 
 createServer(async (req, res) => {
@@ -165,6 +242,13 @@ createServer(async (req, res) => {
     return res.end(PAGE);
   }
   if (url.pathname === '/api/status') return json(200, await status());
+  if (url.pathname === '/api/lessons') {
+    try {
+      return json(200, lessons());
+    } catch (e) {
+      return json(500, { error: String(e?.message ?? e) });
+    }
+  }
   if (url.pathname === '/api/start' && req.method === 'POST') {
     try {
       return json(200, await startAll());
